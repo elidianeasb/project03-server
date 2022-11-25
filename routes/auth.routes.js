@@ -16,6 +16,8 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
 
+const DEFAULT_ACCOUNT_TYPE = 'client'
+
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
   const { email, password, name } = req.body;
@@ -58,7 +60,7 @@ router.post("/signup", (req, res, next) => {
 
       // Create the new user in the database
       // We return a pending promise, which allows us to chain another `then`
-      return User.create({ email, password: hashedPassword, name });
+      return User.create({ email, password: hashedPassword, name, accountType: DEFAULT_ACCOUNT_TYPE});
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password

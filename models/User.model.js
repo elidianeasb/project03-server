@@ -18,9 +18,18 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
+    /* contact: {
+      type: Number,
+      required: [true, "Contact is required."],
+    }, */
+    accountType: {
+      type: String,
+      enum: ['admin', 'client'],
+      required: [true, "Account type is required."],
+    },
+    
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
