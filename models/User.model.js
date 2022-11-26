@@ -26,8 +26,8 @@ const userSchema = new Schema(
       type: String,
       enum: ['admin', 'client'],
       required: [true, "Account type is required."],
-    },
-    
+    },  
+    book: { type: Schema.Types.ObjectId, ref: 'Book'}    
   },
   {
     timestamps: true,
