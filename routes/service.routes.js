@@ -4,9 +4,9 @@ const Service = require('../models/Service.model');
 const Book = require('../models/Book.model')
 
 router.post('/services', (req, res, next) => {
-    const { name, price, description, book } = req.body;
+    const { type, name, price, description, duration, book } = req.body;
 
-    Service.create({ name, price, description, book })
+    Service.create({ type, name, price, description, duration, book })
 /*     .then(newService => {
         return Book.findByIdAndUpdate(book, {$push: { service: { service: newService._id}}} )
     }) */

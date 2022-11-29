@@ -7,10 +7,10 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const { Types } = require("mongoose");
 
 router.post('/books', isAuthenticated, (req, res, next) => {
-    const { name, local, date, contact, service } = req.body;
+    const { local, date, contact, service } = req.body;
     const userId = req.payload._id
 
-    Book.create({ name, local, contact, date, service, user: userId })
+    Book.create({ local, contact, date, service, user: userId })
         .then(response => res.json(response))
         .catch(err => res.json(err));
 })
@@ -32,6 +32,18 @@ router.get('/books', isAuthenticated, (req, res, next) => {
             }
         })
         .catch(err => res.json(err));
+})
+
+router.delete('/books/:id', isAuthenticated, async(req, res, next) => {
+    try {
+        const {id} = req.params;
+        await Book.findByIdAndRemove(id);
+
+        res.status(200).json({message: `The book with id ${id} was deleted successfully`})
+        
+    } catch (error) {
+        next(error)
+    }
 })
 
 

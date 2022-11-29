@@ -4,8 +4,9 @@ const serviceSchema = new Schema(
     {
         type: String,
         name: String,
-        price: Number,
+        price: String,
         description: String,
+        duration: String,
         book: { type: Schema.Types.ObjectId, ref: 'Book'}
     }
 )
