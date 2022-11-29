@@ -6,7 +6,7 @@ const Service = require('../models/Service.model')
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const { Types } = require("mongoose");
 
-router.post('/books', isAuthenticated, (req, res, next) => {
+router.post('/bookings', isAuthenticated, (req, res, next) => {
     const { local, date, contact, service } = req.body;
     const userId = req.payload._id
 
@@ -15,26 +15,26 @@ router.post('/books', isAuthenticated, (req, res, next) => {
         .catch(err => res.json(err));
 })
 
-router.get('/books', isAuthenticated, (req, res, next) => {
+router.get('/bookings', isAuthenticated, (req, res, next) => {
     const authenticatedUser = req.payload._id
     User.findById(authenticatedUser)
         .then(user => {
             if (user.accountType === "client") {
                 Book.find({ user: Types.ObjectId(authenticatedUser) })
                     .populate('service')
-                    .then(allBooks => res.json(allBooks))
+                    .then(allBookings => res.json(allBookings))
                     .catch(err => res.json(err));
             } else if (user.accountType === "admin") {
                 Book.find()
                     .populate('service')
-                    .then(allBooks => res.json(allBooks))
+                    .then(allBookings => res.json(allBookings))
                     .catch(err => res.json(err));
             }
         })
         .catch(err => res.json(err));
 })
 
-router.delete('/books/:id', isAuthenticated, async(req, res, next) => {
+router.delete('/bookings/:id', isAuthenticated, async(req, res, next) => {
     try {
         const {id} = req.params;
         await Book.findByIdAndRemove(id);

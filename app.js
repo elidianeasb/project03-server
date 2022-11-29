@@ -24,6 +24,9 @@ app.use("/api", authRoutes);
 const bookRoutes = require("./routes/book.routes");
 app.use("/api", bookRoutes);
 
+const userRoutes = require("./routes/user.routes");
+app.use("/api", userRoutes);
+
 const serviceRoutes = require("./routes/service.routes");
 app.use("/api", serviceRoutes);
 
