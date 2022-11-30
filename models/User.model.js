@@ -18,10 +18,8 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
-    /* contact: {
-      type: Number,
-      required: [true, "Contact is required."],
-    }, */
+    phone: Number, 
+    Address: String,   
     accountType: {
       type: String,
       enum: ['admin', 'client'],

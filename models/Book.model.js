@@ -24,8 +24,8 @@ const bookSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, "User is required."]
-    }
-
+    },
+    status: String
   },
   {
     timestamps: true,

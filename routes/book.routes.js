@@ -7,10 +7,10 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const { Types } = require("mongoose");
 
 router.post('/bookings', isAuthenticated, (req, res, next) => {
-    const { local, date, contact, service } = req.body;
+    const { local, date, contact, service, status } = req.body;
     const userId = req.payload._id
 
-    Book.create({ local, contact, date, service, user: userId })
+    Book.create({ local, contact, date, service, status, user: userId })
         .then(response => res.json(response))
         .catch(err => res.json(err));
 })

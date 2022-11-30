@@ -22,9 +22,11 @@ router.put('/edit/:userId', async (req, res, next) => {
     try {
         const { userId } = req.params;
         const { name } = req.body;
+        const { email } = req.body;
+        const { phone } = req.body;
 
         const userUpdate = await User.findByIdAndUpdate(userId,
-            { name },
+            { name, email, phone },
             { new: true }
         );
 
