@@ -18,9 +18,16 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
+    phone: Number, 
+    Address: String,   
+    accountType: {
+      type: String,
+      enum: ['admin', 'client'],
+      required: [true, "Account type is required."],
+    },  
+    book: { type: Schema.Types.ObjectId, ref: 'Book'}    
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
