@@ -16,16 +16,17 @@ const bookSchema = new Schema(
       ref: "Service",
       required: [true, "Service is required."]
     },
-    contact: {
-      type: Number,
-      required: [true, "Contact is required."],
-    },
+
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, "User is required."]
     },
-    status: String
+    status: {
+      type: String,
+      enum: ['pending', 'accepted', 'canceled'],
+      default: 'pending'
+    },
   },
   {
     timestamps: true,
