@@ -7,10 +7,10 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const { Types } = require("mongoose");
 
 router.post('/bookings', isAuthenticated, (req, res, next) => {
-    const { local, date, service } = req.body;
+    const { service, hour, date  } = req.body;
     const userId = req.payload._id
 
-    Book.create({ local, date, service, user: userId })
+    Book.create({ service, hour, date, user: userId })
         .then(response => res.json(response))
         .catch(err => res.json(err));
 })
@@ -50,7 +50,7 @@ router.get('/bookings', isAuthenticated, (req, res, next) => {
                     .catch(err => res.json(err));
             } else if (user.accountType === "admin") {
                 Book.find()
-                    .populate('service')
+                    .populate('service user')
                     .then(allBookings => res.json(allBookings))
                     .catch(err => res.json(err));
             }
@@ -61,7 +61,7 @@ router.get('/bookings', isAuthenticated, (req, res, next) => {
 router.delete('/bookings/:id', isAuthenticated, async (req, res, next) => {
     try {
         const { id } = req.params;
-        await Book.findByIdAndUpdate(id, { status: "canceled" }); // não deletar, tem que mudar o status pra canceled
+        await Book.findByIdAndUpdate(id, { status: "canceled" }); // do not delete, just update to canceled
 
         res.status(200).json({ message: `The book with id ${id} was deleted successfully` })
 
