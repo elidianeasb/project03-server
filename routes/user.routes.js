@@ -2,8 +2,6 @@ const router = require('express').Router();
 const User = require('../models/User.model');
 const { isAuthenticated } = require('../middleware/jwt.middleware')
 
-// Display User profile
-
 router.get('/account/:userId', isAuthenticated, async (req, res, next) => {
     try {
         const { userId } = req.params;
@@ -13,10 +11,7 @@ router.get('/account/:userId', isAuthenticated, async (req, res, next) => {
     } catch (error) {
         console.log(error)
     }
-
 });
-
-// Edit User
 
 router.put('/edit/:userId', async (req, res, next) => {
     try {
@@ -24,19 +19,18 @@ router.put('/edit/:userId', async (req, res, next) => {
         const { name } = req.body;
         const { email } = req.body;
         const { phone } = req.body;
+        const { address } = req.body;
 
         const userUpdate = await User.findByIdAndUpdate(userId,
-            { name, email, phone },
+            { name, email, phone, address },
             { new: true }
         );
 
         res.status(200).json(userUpdate);
-
     } catch (error) {
         next(error);
     }
 })
-
 
 module.exports = router;
 
