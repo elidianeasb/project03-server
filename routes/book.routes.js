@@ -7,7 +7,7 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 const { Types } = require("mongoose");
 
 router.post('/bookings', isAuthenticated, (req, res, next) => {
-    const { service, hour, date  } = req.body;
+    const { service, hour, date } = req.body;
     const userId = req.payload._id
 
     Book.create({ service, hour, date, user: userId })
@@ -28,7 +28,7 @@ router.put('/bookings/:id/accept', isAuthenticated, async (req, res, next) => {
                     if (user.accountType === "admin") {
                         await Book.findByIdAndUpdate(id, { status: "accepted" });
                         res.status(200).json({ message: `The book with id ${id} was accepted successfully` })
-                    }else{
+                    } else {
                         res.status(403).json({ errorMessage: "Operation not allowed" });
                     }
                 })
@@ -62,9 +62,7 @@ router.delete('/bookings/:id', isAuthenticated, async (req, res, next) => {
     try {
         const { id } = req.params;
         await Book.findByIdAndUpdate(id, { status: "canceled" }); // do not delete, just update to canceled
-
         res.status(200).json({ message: `The book with id ${id} was deleted successfully` })
-
     } catch (error) {
         next(error)
     }
